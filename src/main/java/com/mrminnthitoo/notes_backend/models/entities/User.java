@@ -1,5 +1,6 @@
 package com.mrminnthitoo.notes_backend.models.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,6 +28,7 @@ public class User extends Base{
     @Column
     private Date confirmedAt;
 
+    @JsonIgnore
     @OneToMany(
             fetch = FetchType.LAZY,
             cascade = {
@@ -36,6 +38,7 @@ public class User extends Base{
     )
     private Set<Note> notes = new HashSet<>();
 
+    @JsonIgnore
     @OneToMany(
             fetch = FetchType.LAZY,
             cascade = {
@@ -45,6 +48,7 @@ public class User extends Base{
     )
     private Set<Tag> tags = new HashSet<>();
 
+    @JsonIgnore
     @ManyToMany(
             fetch = FetchType.EAGER,
             cascade = CascadeType.ALL

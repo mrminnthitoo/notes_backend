@@ -105,5 +105,28 @@ public class NoteController {
 
     }
 
+    @PostMapping("/{noteId}/tag/{tagId}")
+    public ResponseEntity<RESTResponser> addNoteToTag(@PathVariable Long noteId, @PathVariable Long tagId) throws NotFoundException {
+
+        NoteDto note = this.noteService.addNoteToTag(this.authUser.getId(), noteId, tagId);
+        return this.apiResponse.successResponse(
+                HttpStatus.CREATED,
+                "note added to tag successfully.",
+                note
+        );
+
+    }
+
+    @DeleteMapping("/{noteId}/tag/{tagId}")
+    public ResponseEntity<RESTResponser> removeNoteToTag(@PathVariable Long noteId, @PathVariable Long tagId) throws NotFoundException {
+
+        NoteDto note = this.noteService.removeNoteFromTag(this.authUser.getId(), noteId, tagId);
+        return this.apiResponse.successResponse(
+                HttpStatus.OK,
+                "note removed from tag successfully.",
+                note
+        );
+
+    }
 
 }
