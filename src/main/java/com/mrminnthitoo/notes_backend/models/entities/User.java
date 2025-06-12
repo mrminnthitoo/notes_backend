@@ -36,6 +36,15 @@ public class User extends Base{
     )
     private Set<Note> notes = new HashSet<>();
 
+    @OneToMany(
+            fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.ALL
+            },
+            mappedBy = "user"
+    )
+    private Set<Tag> tags = new HashSet<>();
+
     @ManyToMany(
             fetch = FetchType.EAGER,
             cascade = CascadeType.ALL

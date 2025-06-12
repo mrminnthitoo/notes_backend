@@ -10,14 +10,25 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@Table(name = "notes")
-public class Note extends Base{
+@Table(name = "tags")
+public class Tag extends Base{
 
     @Column
-    private String title;
+    private String name;
 
-    @Column(nullable = false)
-    private String content;
+    @ManyToMany(
+            fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH
+            }
+    )
+    @JoinTable(
+            name = "tags_notes",
+            joinColumns = {@JoinColumn(name = "tag_id")},
+            inverseJoinColumns = {@JoinColumn(name = "note_id")}
+    )
+    private Set<Note> notes = new HashSet<>();
 
     @ManyToOne(
             fetch = FetchType.LAZY,
@@ -26,16 +37,7 @@ public class Note extends Base{
                     CascadeType.REFRESH
             }
     )
+    @JoinColumn(name = "user_id")
     private User user;
-
-    @ManyToMany(
-            fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.MERGE,
-                    CascadeType.REFRESH
-            },
-            mappedBy = "notes"
-    )
-    private Set<Tag> tags = new HashSet<>();
 
 }
