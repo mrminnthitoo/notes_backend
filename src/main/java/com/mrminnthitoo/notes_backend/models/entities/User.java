@@ -27,6 +27,15 @@ public class User extends Base{
     @Column
     private Date confirmedAt;
 
+    @OneToMany(
+            fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.ALL
+            },
+            mappedBy = "user"
+    )
+    private Set<Note> notes = new HashSet<>();
+
     @ManyToMany(
             fetch = FetchType.EAGER,
             cascade = CascadeType.ALL

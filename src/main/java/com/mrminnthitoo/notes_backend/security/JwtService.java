@@ -19,6 +19,9 @@ public class JwtService {
     @Value("${jwt.secret}")
     private String secret;
 
+    @Value("${jwt.expiration_time}")
+    private Long expirationTime;
+
     public String extractUsername(String jwtToken) {
         return extractClaim(jwtToken, Claims::getSubject);
     }
@@ -58,7 +61,7 @@ public class JwtService {
         return Jwts.builder()
                 .subject(user.getUsername())
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
+                .expiration(new Date(System.currentTimeMillis() + (1000 * expirationTime)))
                 .signWith(getSigningKey())
                 .compact();
     }
