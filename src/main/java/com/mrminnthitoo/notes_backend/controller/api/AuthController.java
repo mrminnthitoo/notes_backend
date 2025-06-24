@@ -8,18 +8,17 @@ import com.mrminnthitoo.notes_backend.models.dtos.RegisterDto;
 import com.mrminnthitoo.notes_backend.models.dtos.UserDto;
 import com.mrminnthitoo.notes_backend.services.AuthService;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -48,11 +47,16 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Map<String, String>> login(@Valid @RequestBody LoginDto loginDto){
+    public ResponseEntity<RESTResponser> login(@Valid @RequestBody LoginDto loginDto){
+        log.info("Login ---------->");
         String token = this.authService.login(loginDto);
         Map<String, String> tokenMap = new HashMap<>();
         tokenMap.put("token", token);
-        return ResponseEntity.ok(tokenMap);
+        return this.apiResponse.successResponse(
+                HttpStatus.OK,
+                "logged in successfully",
+                tokenMap
+        );
     }
 
 }

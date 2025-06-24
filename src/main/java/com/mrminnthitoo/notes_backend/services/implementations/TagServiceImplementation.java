@@ -4,7 +4,6 @@ import com.mrminnthitoo.notes_backend.exceptions.NotFoundException;
 import com.mrminnthitoo.notes_backend.helpers.Mapper;
 import com.mrminnthitoo.notes_backend.models.dtos.TagDto;
 import com.mrminnthitoo.notes_backend.models.dtos.TagNotesDto;
-import com.mrminnthitoo.notes_backend.models.entities.Note;
 import com.mrminnthitoo.notes_backend.models.entities.Tag;
 import com.mrminnthitoo.notes_backend.models.entities.User;
 import com.mrminnthitoo.notes_backend.repositories.TagRepository;
