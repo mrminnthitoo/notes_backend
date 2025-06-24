@@ -23,7 +23,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
+        User user = userRepository.findByUsernameOrEmail(username, username);
 
         if (user == null) {
             throw new UsernameNotFoundException(username);
@@ -36,7 +36,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     List<GrantedAuthority> grantedAuthorities = user.getRoles().stream()
             .map(role -> new SimpleGrantedAuthority(role.getName()))
             .collect(Collectors.toList());
-    return new CustomUserDetails(user.getId(), user.getUsername(),
+    return new CustomUserDetails(user.getId(), user.getUsername(), user.getEmail(),
             user.getPassword(),
             grantedAuthorities);
 }

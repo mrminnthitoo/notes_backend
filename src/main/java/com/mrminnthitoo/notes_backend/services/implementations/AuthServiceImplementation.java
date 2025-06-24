@@ -59,8 +59,8 @@ public class AuthServiceImplementation implements AuthService {
 
     @Override
     public String login(LoginDto userDto) {
-        this.authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userDto.getUsername() == null ? userDto.getEmail() : userDto.getUsername(), userDto.getPassword()));
-        User u = userRepository.findByUsernameOrEmail(userDto.getUsername(), userDto.getEmail());
+        this.authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userDto.getUsername(), userDto.getPassword()));
+        User u = userRepository.findByUsernameOrEmail(userDto.getUsername(), userDto.getUsername());
         return jwtService.generateToken(u);
     }
 }
