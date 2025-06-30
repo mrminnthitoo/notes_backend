@@ -48,7 +48,6 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<RESTResponser> login(@Valid @RequestBody LoginDto loginDto){
-        log.info("Login ---------->");
         String token = this.authService.login(loginDto);
         Map<String, String> tokenMap = new HashMap<>();
         tokenMap.put("token", token);
